@@ -23,7 +23,7 @@ def embed_success(input1, input2=None):
 
 # Function to evaluate the customizable Embed Color of the Bot
 def get_custom_color():
-    with open("storage.json", "r") as f:
+    with open("donut/storage.json", "r") as f:
         file=json.load(f)
 
     color = eval(f"discord.Color.{'_'.join(file['special-color'].split(' '))}()")
@@ -582,14 +582,14 @@ class Moderation(commands.Cog):
         if parameter in ("message-channel" , "starboard-channel") and new_value == "None":
             new_value = 0
 
-        with open("storage.json", "r") as f:
+        with open("donut/storage.json", "r") as f:
             file = json.load(f)
 
         # Checks if the parameter is actually a valid parameter
         if parameter in list(file):
             file[parameter] = new_value
 
-            with open("storage.json", "w") as f:
+            with open("donut/storage.json", "w") as f:
                 json.dump(file, f)
 
             await ctx.send(embed=embed_success(f"Set {parameter} to {new_value}"))
@@ -606,7 +606,7 @@ class Moderation(commands.Cog):
 
         # Help for a specific Command
         if command != None:
-            with open("commands.json", "r") as f:
+            with open("donut/commands.json", "r") as f:
                 file=json.load(f)
 
             # Validating if the given command is a name or Alias of a Command
@@ -625,7 +625,7 @@ class Moderation(commands.Cog):
         
         # Help generally (no command given)
         else:
-            with open("commands.json", "r") as f:
+            with open("donut/commands.json", "r") as f:
                 file=json.load(f)
 
             # setting up the Embed
@@ -654,7 +654,7 @@ class Moderation(commands.Cog):
     @commands.has_guild_permissions(administrator=True)
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def setup(self, ctx, parameter=None):
-        with open("storage.json", "r") as f:
+        with open("donut/storage.json", "r") as f:
             file=json.load(f)
         
         # Code to display the whole customization

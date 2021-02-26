@@ -32,7 +32,7 @@ def embed_error(input1, input2=None):
 
 # Function to evaluate the customizable Embed Color of the Bot
 def get_custom_color():
-    with open("storage.json", "r") as f:
+    with open("donut/storage.json", "r") as f:
         file=json.load(f)
 
     color = eval(f"discord.Color.{'_'.join(file['special-color'].split(' '))}()")
@@ -43,7 +43,7 @@ def get_custom_color():
 @bot.event
 async def on_ready():
     await bot.change_presence(activity=discord.Game(name=STATUS)) #<<<<------- 
-    with open("levels.json", "r") as f:
+    with open("donut/levels.json", "r") as f:
         leveling=json.load(f)
     print("ready and good to go")
 
@@ -58,7 +58,7 @@ async def on_command_error(ctx, error):
 
         # User tests this Command to get Information about it
         if ctx.message.content in ['-' + ctx.command.name] + ['-' + i for i in ctx.command.aliases]:
-            with open("commands.json", "r") as f:
+            with open("donut/commands.json", "r") as f:
                 file=json.load(f)
             await ctx.send(embed=discord.Embed(
                 title=ctx.command.name + "  " + ctx.command.signature, 

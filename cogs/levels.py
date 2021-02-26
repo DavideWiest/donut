@@ -23,7 +23,7 @@ def embed_success(input1, input2=None):
 
 # Function to evaluate the customizable Embed Color of the Bot
 def get_custom_color():
-    with open("storage.json", "r") as f:
+    with open("donut/storage.json", "r") as f:
         file=json.load(f)
 
     color = eval(f"discord.Color.{'_'.join(file['special-color'].split(' '))}()")
@@ -47,7 +47,7 @@ class Levels(commands.Cog):
         if message.guild != None:
 
             # Logging that an User (message.author) sent a Message
-            with open("levels.json", "r") as f:
+            with open("donut/levels.json", "r") as f:
                 file=json.load(f)
 
             if str(message.author.id) not in list(file[str(message.guild.id)]):
@@ -55,11 +55,11 @@ class Levels(commands.Cog):
             else:
                 file[str(message.guild.id)][str(message.author.id)] += 1
 
-            with open("levels.json", "w") as f:
+            with open("donut/levels.json", "w") as f:
                 json.dump(file, f)
 
             # Creating the Leveling-Map (To know which Message-Counter corresponds to which Level)
-            with open("storage.json", "r") as f:
+            with open("donut/storage.json", "r") as f:
                 lvling=json.load(f)
                 base_msgs, factor_msgs = lvling["level-schema"]
                 req_msgs = {}
@@ -69,21 +69,11 @@ class Levels(commands.Cog):
                     req_msgs[round(i * base_msgs + (i-1) * base_msgs * factor_msgs)] = i
 
     # Simple Command to inform People about Me (Daev) making Bots
-    @commands.command(aliases=["bot-maker", "daev", "dave", "bot"])
+    @commands.command(aliases=["daev", "dave", "bot"])
     async def custombot(self, ctx):
         embed_bot = discord.Embed(title=f"{self.bot.user.name} was created by Dæv•#7540", color=discord.Color.blurple(), description="""
-**Want your own custom bot?
-tell that Dæv•#7540**
-- experienced Coder 
-- Verified Bot-Developer by Discord
-
-- high-quality Discord-Bot made with Love :heart:
-- :level_slider: custom commands and design
-- highly customizable afterwards
-- reliable, Hosting is also my job
-- <:emoji_48:789910396962078760> fast Support
-- Price-Worthy starting at around 10€
-
+I be makin' b0ts
+Contact me if you are interested in a custom Bot
         """)
         await ctx.send(embed=embed_bot)
 

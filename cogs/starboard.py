@@ -34,7 +34,7 @@ def isvalid(message):
 
 # Function to evaluate the customizable Embed Color of the Bot
 def get_custom_color():
-    with open("storage.json", "r") as f:
+    with open("donut/storage.json", "r") as f:
         file=json.load(f)
 
     color = eval(f"discord.Color.{'_'.join(file['special-color'].split(' '))}()")
@@ -52,7 +52,7 @@ class Starboard(commands.Cog):
     async def starboard_send(self, message):
 
         # getting the starboard channel and setting an Embed up
-        with open("storage.json", "r") as f:
+        with open("donut/storage.json", "r") as f:
             file=json.load(f)
         starboard = self.bot.get_channel(file["starboard-channel"])
         embed_starboard = discord.Embed(color=get_custom_color(), description=message.content if message.content != None else '\uFEFF')
@@ -121,7 +121,7 @@ class Starboard(commands.Cog):
     async def on_message(self, message):
 
         # Adding the blacklist for things that should not come to the starboard channel
-        with open("storage.json", "r") as f:
+        with open("donut/storage.json", "r") as f:
             file=json.load(f)
         if file["starboard-blacklist"] != None:
             blacklist_channels = list(file["starboard-blacklist"])
@@ -142,7 +142,7 @@ class Starboard(commands.Cog):
     @commands.guild_only()
     @commands.has_guild_permissions(administrator=True)
     async def starboardblacklist(self, ctx, add_or_remove, channel: discord.TextChannel):
-        with open("storage.json", "r") as f:
+        with open("donut/storage.json", "r") as f:
             file=json.load(f)
             
         if file["starboard-blacklist"] == None:
@@ -163,7 +163,7 @@ class Starboard(commands.Cog):
             await ctx.send(embed=embed_error(f"{add_or_remove} is not a valid Parameter for add_or_remove", "You (obviously) need to chose between `add` or `remove`"))
 
         # Saving all changes by overwriting the file with the changed one
-        with open("storage.json", "w") as f:
+        with open("donut/storage.json", "w") as f:
             json.dump(file, f)
     
 
