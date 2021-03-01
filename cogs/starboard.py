@@ -28,7 +28,7 @@ def isvalid(message):
 
             # Check if more than 5 people "upvoted" this message
             if str(i.emoji) in (':moon:', '<:moon:787193302004924427>'):
-                if i.count == 1: #Change this later to 5 ------------------------------- done
+                if i.count == 5: #Change this later to 5 ------------------------------- done
                     isvalid = True
     return isvalid
 
