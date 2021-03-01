@@ -115,7 +115,6 @@ Contact me if you are interested in a custom Bot
         await ctx.send(embed=discord.Embed(color=get_custom_color(), description="Reminder: \n" + message))
 
 
-
     # ----------------------- FUNCTIONS -----------------------
 
 # Adding the Cog Object

@@ -27,8 +27,8 @@ def isvalid(message):
         for i in message.reactions:
 
             # Check if more than 5 people "upvoted" this message
-            if str(i.emoji) in (':star:', 'star', '⭐', ':moon:', '<:moon:787193302004924427>'):
-                if i.count >= 4: #Change this later to 5 ------------------------------- done
+            if str(i.emoji) in (':moon:', '<:moon:787193302004924427>'):
+                if i.count == 1: #Change this later to 5 ------------------------------- done
                     isvalid = True
     return isvalid
 
@@ -50,6 +50,8 @@ class Starboard(commands.Cog):
 
     # Function to get the Message items and send them to the (customizable) starboard-channel
     async def starboard_send(self, message):
+        channel_fetch = message.channel.id
+        id_fetch = message.id
 
         # getting the starboard channel and setting an Embed up
         with open("donut/storage.json", "r") as f:
@@ -57,11 +59,11 @@ class Starboard(commands.Cog):
         starboard = self.bot.get_channel(file["starboard-channel"])
         embed_starboard = discord.Embed(color=get_custom_color(), description=message.content if message.content != None else '\uFEFF')
        
-
         # Customizing the Embed
         embed_starboard.set_author(name=message.author.name, icon_url=str(message.author.avatar_url))
-        embed_starboard.add_field(name="Jump to Original", value=f"[Jump]({message.jump_url})")
+        embed_starboard.add_field(name="Jump to Original", value=f"[**Jump**]({message.jump_url})")
         
+        #print(3)
         # Finding an Image, if it exists
         image = "None found"
         for i in message.attachments:
@@ -91,51 +93,48 @@ class Starboard(commands.Cog):
         
         count = 0
         for i in message.reactions:
-            if str(i.emoji) in (':star:', 'star', '⭐', ':moon:', '<:moon:787193302004924427>'):
+            if str(i.emoji) in (':moon:', '<:moon:787193302004924427>'):
                     count = i.count
-        starmsg = await starboard.send(f":star: **{count}** {str(message.channel)} [{message.channel.id}]")
+        starmsg = await starboard.send(f"<:moon:787193302004924427> **{count}** {message.channel.mention} [{message.channel.id}]")
         await starboard.send(embed=embed_starboard)
-        #print(2.5)
+        #print(4)
+        channel_fetch2 = starmsg.channel.id
+        id_fetch2 = starmsg.id
 
         # Periodiacally Updating the Star-Counter in intervals of 10 minutes (Updating it for 5hours)
-        for i in range(30):
-            
-            # SLeeping so that it does not iterate all at once
-            await asyncio.sleep(600)
+        for x in range(720 * 2):
+            await asyncio.sleep(60)
+            message = self.bot.get_channel(channel_fetch)
+            message = await message.fetch_message(id_fetch)
             for i in message.reactions:
-
-                # Checking if the Star-reaction counter stayed the same
-                if str(i.emoji) in (':star:', 'star', '⭐', ':moon:', '<:moon:787193302004924427>'):
-                    if count != i.count:
-                        count = i.count
-
-                        # Editing the Message
-                        await starmsg.edit(content=f"<:moon:787193302004924427> **{count}** #{message.channel.name} [{message.channel.id}]")
+                if str(i.emoji) in (':moon:', '<:moon:787193302004924427>') and i.count != count:
+                    count = i.count
+                    starmsg = self.bot.get_channel(channel_fetch2)
+                    starmsg = await starmsg.fetch_message(id_fetch2)
+                    await starmsg.edit(content=f"<:moon:787193302004924427> **{count}** {message.channel.mention} [{message.channel.id}]")
     
-
-    # ----------------------- FUNCTIONS -----------------------
-
-
-    # Another on_message Event Listener for the Strarboard to work
     @commands.Cog.listener()
-    async def on_message(self, message):
-
-        # Adding the blacklist for things that should not come to the starboard channel
-        with open("donut/storage.json", "r") as f:
-            file=json.load(f)
-        if file["starboard-blacklist"] != None:
-            blacklist_channels = list(file["starboard-blacklist"])
-        else:
-            blacklist_channels = []
-
-        # Checking if the Channel of this message is not blacklisted
-        if message.channel.id not in blacklist_channels:
-
-            # Waiting 15 minutes and then evaluating if this meets the starboard criteria (functions make the code cleaner)
-            await asyncio.sleep(25 * 60) #Change this later to 15 -------------------- done
+    async def on_raw_reaction_add(self, payload):
+        #print(1)
+        if payload.guild_id != None:
+            channel = self.bot.get_channel(payload.channel_id)
+            message = await channel.fetch_message(payload.message_id)
             
-            if isvalid(message) == True:
-                await self.starboard_send(message)
+            # Adding the blacklist for things that should not come to the starboard channel
+            with open("donut/storage.json", "r") as f:
+                file=json.load(f)
+            if file["starboard-blacklist"] != None:
+                blacklist_channels = list(file["starboard-blacklist"])
+            else:
+                blacklist_channels = []
+
+
+            if message.channel.id not in blacklist_channels:
+
+                if isvalid(message) == True:
+                    #print(2)
+                    await self.starboard_send(message)
+
 
     # Custom Command to set up the blacklisted Channels from Starboard
     @commands.command(aliases=["starboard-blacklist"])
@@ -166,7 +165,6 @@ class Starboard(commands.Cog):
         with open("donut/storage.json", "w") as f:
             json.dump(file, f)
     
-
 
     # ----------------------- FUNCTIONS -----------------------
 
