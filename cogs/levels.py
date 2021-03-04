@@ -118,7 +118,7 @@ Contact me if you are interested in a custom Bot
     @commands.has_guild_permissions(manage_roles=True)
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def voterole(self, ctx, member: discord.Member):
-        role = ctx.guild.get_role(814730254832369685)
+        role = ctx.guild.get_role(763439865915506729)
         await member.add_roles(role, reason=f"Action by {str(ctx.author)} \n Added the Voter-Role [{role.name}] to {str(member)} for 12h")
 
         await ctx.send(embed=embed_success(f"{member.name}, you now have the {role.name}-role for 12 Hours!"))
