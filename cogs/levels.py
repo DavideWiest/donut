@@ -114,6 +114,59 @@ Contact me if you are interested in a custom Bot
             
         await ctx.send(embed=discord.Embed(color=get_custom_color(), description="Reminder: \n" + message))
 
+    @commands.command()
+    @commands.has_guild_permissions(manage_roles=True)
+    @commands.cooldown(1, 5, commands.BucketType.user)
+    async def voterole(self, ctx, member: discord.Member):
+        role = ctx.guild.get_role(0)
+        await member.add_roles(role, reason=f"Action by {str(ctx.author)} \n Added the Voter-Role [{role.name}] to {str(member)} for 12h")
+
+        await ctx.send(embed=embed_success(f"{member.name}, you now have the {role.name}-role for 12 Hours!"))
+    
+        await asyncio.sleep(12 * 60 * 60)
+
+        await member.remove_roles(role, reason=f"Temporary Role-Ownership ({role.name}) by {str(ctx.author)} for 12h ended")
+        
+    @commands.command()
+    @commands.has_guild_permissions(manage_roles=True)
+    @commands.cooldown(1, 5, commands.BucketType.user)
+    async def temprole(self, ctx, member: discord.Member, hours, *, role):
+        try:
+            role = self.bot.get_role(int(role[3:-1]))
+        except:
+            pass
+        
+        if not isinstance(role, discord.Role):
+
+            # Iteratinng through all roles of the server to check
+            for i in ctx.guild.roles:
+                
+                # Looking if the role name starts/ends with the role parameter, or is equal to it
+                if i.name.lower().startswith(role.lower()) or i.name.lower().endswith(role.lower()) or i.name.lower() == role.lower() or str(i.id) == str(role[3:-1]):
+                    rolegot = True
+                    role = i
+                    break
+            
+            # Look if the code above didnt already find a role
+            if rolegot == False:
+
+                # Running the code finder again if the statement above triggered
+                for i in ctx.guild.roles:
+                    
+                    # Looking if the role name starts/ends with the role parameter, or is equal to it, Or if the role parameter is one item of the single parts of the role inside the iteration
+                    if role.lower() in i.name.split(" ") or i.name.lower().startswith(role.lower()) or i.name.lower().endswith(role.lower()) or i.name.lower() == role.lower() or str(i.id) == str(role[3:-1]):
+                        rolegot = True
+                        role = i
+                        break
+        
+        hours = int(hours.split("h")[0].split(" ")[0])
+        await member.add_roles(role, reason=f"Action by {str(ctx.author)} \n Added the Voter-Role [{role.name}] to {str(member)} for {hours}h")
+
+        await ctx.send(embed=embed_success(f"{member.name}, you now have the {role.name}-role for {hours} Hours!"))
+
+        await asyncio.sleep(hours * 60 * 60)
+
+        await member.remove_roles(role, reason=f"Temporary Role-Ownership ({role.name}) by {str(ctx.author)} for {hours}h ended")
 
     # ----------------------- FUNCTIONS -----------------------
 
