@@ -20,17 +20,6 @@ def embed_success(input1, input2=None):
         embed_success.add_field(name='\uFEFF', value=str(input2))
     return embed_success
 
-# Function to check if a message meets the criteria to get into the starboard
-def isvalid(message):
-    isvalid = False
-    if len(message.reactions) >= 1:
-        for i in message.reactions:
-
-            # Check if more than 5 people "upvoted" this message
-            if str(i.emoji) in (':moon:', '<:moon:787193302004924427>'):
-                if i.count == 5: #Change this later to 5 ------------------------------- done
-                    isvalid = True
-    return isvalid
 
 # Function to evaluate the customizable Embed Color of the Bot
 def get_custom_color():
@@ -47,6 +36,23 @@ class Starboard(commands.Cog):
     # Mandatory Function to assign self.bot to the Bot instance of main.py
     def __init__(self, bot):
         self.bot = bot
+
+    async def isvalid(self, message):
+        isvalid = False
+        if len(message.reactions) >= 1:
+            for i in message.reactions:
+
+                # Check if more than 5 people "upvoted" this message
+                if str(i.emoji) in (':moon:', '<:moon:787193302004924427>'):
+                    if i.count == 1: #Change this later to 5 ------------------------------- done
+                        isvalid = True
+                        for i in message.reactions:
+                            if str(i.emoji) in ('\U00002714') and i.me == True: #, '<:anime_checkmark:819326928603054121>'
+                                isvalid = False
+
+        if isvalid == True:
+            await message.add_reaction("\U00002714")
+        return isvalid
 
     # Function to get the Message items and send them to the (customizable) starboard-channel
     async def starboard_send(self, message):
@@ -131,7 +137,7 @@ class Starboard(commands.Cog):
 
             if message.channel.id not in blacklist_channels:
 
-                if isvalid(message) == True:
+                if await self.isvalid(message) == True:
                     #print(2)
                     await self.starboard_send(message)
 
