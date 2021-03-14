@@ -168,6 +168,14 @@ Contact me if you are interested in a custom Bot
 
         await member.remove_roles(role, reason=f"Temporary Role-Ownership ({role.name}) by {str(ctx.author)} for {hours}h ended")
 
+    @commands.command(aliases=["nick"])
+    @commands.has_guild_permissions(manage_nicknames=True)
+    @commands.cooldown(1, 5, commands.BucketType.user)
+    async def nickname(self, ctx, member: discord.Member, *, nickname):
+        await member.edit(nick=str(nickname))
+
+        await ctx.send(embed=embed_success(f"{member.name}'s new nickname is {nickname}"))
+
     # ----------------------- FUNCTIONS -----------------------
 
 # Adding the Cog Object
