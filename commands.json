@@ -25,5 +25,6 @@
     "bake": "Custom Command - just test it :D",
     "reminder": "Set a timed reminder. Example: -reminder 10m Stop watching Anime *or* -reminder 1d 1h 1m 1s -- Reminder of time elapsing (When handling multiple time units, seperate the message with ` -- `)",
     "voterole": "Give a fellow Voter the Voter-role for 12 hours (manage roles needed)",
-    "temprole": "Specify role, member & time to give the Member a role for a specific time (manage roles needed)"
+    "temprole": "Specify role, member & time to give the Member a role for a specific time (manage roles needed)",
+    "nickname": "Give a specified person a new nickname"
 }
