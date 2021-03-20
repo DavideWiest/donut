@@ -26,7 +26,12 @@
     "reminder": "Set a timed reminder. Example: -reminder 10m Stop watching Anime *or* -reminder 1d 1h 1m 1s -- Reminder of time elapsing (When handling multiple time units, seperate the message with ` -- `)",
     "voterole": "Give a fellow Voter the Voter-role for 12 hours (manage roles needed)",
     "temprole": "Specify role, member & time to give the Member a role for a specific time (manage roles needed)",
+<<<<<<< HEAD
     "nickname": "Give the specified person a new nickname",
     "warns": "See how many warnings a member has with this command",
     "warn": "Warn a member. (Kick-member permissions required)"
 }
+=======
+    "nickname": "Give a specified person a new nickname"
+}
+>>>>>>> 8f7d84124e167f645388c98a25ebfcf40bbb2e01
