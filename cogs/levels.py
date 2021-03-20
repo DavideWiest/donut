@@ -39,35 +39,6 @@ class Levels(commands.Cog):
 
     # ----------------------- FUNCTIONS -----------------------
 
-    # On-Message Event for Leveling
-    @commands.Cog.listener()
-    async def on_message(self, message):
-        return
-        # Chcking if this Message was not sent in DMs
-        if message.guild != None:
-
-            # Logging that an User (message.author) sent a Message
-            with open("donut/levels.json", "r") as f:
-                file=json.load(f)
-
-            if str(message.author.id) not in list(file[str(message.guild.id)]):
-                file[str(message.guild.id)][str(message.author.id)] = 1
-            else:
-                file[str(message.guild.id)][str(message.author.id)] += 1
-
-            with open("donut/levels.json", "w") as f:
-                json.dump(file, f)
-
-            # Creating the Leveling-Map (To know which Message-Counter corresponds to which Level)
-            with open("donut/storage.json", "r") as f:
-                lvling=json.load(f)
-                base_msgs, factor_msgs = lvling["level-schema"]
-                req_msgs = {}
-
-                # Iterating/Making the Leveling Map up to Level 100
-                for i in range(101):
-                    req_msgs[round(i * base_msgs + (i-1) * base_msgs * factor_msgs)] = i
-
     # Simple Command to inform People about Me (Daev) making Bots
     @commands.command(aliases=["daev", "dave", "bot"])
     async def custombot(self, ctx):
@@ -115,6 +86,7 @@ Contact me if you are interested in a custom Bot
         await ctx.send(embed=discord.Embed(color=get_custom_color(), description="Reminder: \n" + message))
 
     @commands.command()
+    @commands.guild_only()
     @commands.has_guild_permissions(manage_roles=True)
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def voterole(self, ctx, member: discord.Member):
@@ -128,6 +100,7 @@ Contact me if you are interested in a custom Bot
         await member.remove_roles(role, reason=f"Temporary Role-Ownership ({role.name}) by {str(ctx.author)} for 12h ended")
         
     @commands.command()
+    @commands.guild_only()
     @commands.has_guild_permissions(manage_roles=True)
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def temprole(self, ctx, member: discord.Member, hours, *, role):
@@ -176,6 +149,37 @@ Contact me if you are interested in a custom Bot
 
         await ctx.send(embed=embed_success(f"{member.name}'s new nickname is {nickname}"))
 
+    @commands.command()
+    @commands.guild_only()
+    @commands.cooldown(1, 5, commands.BucketType.user)
+    async def warn(self, ctx, member: discord.Member):
+        with open("donut/warnings.json", "r") as f:
+            data=json.load(f)
+
+        if str(member.id) not in list(data):
+            data[str(member.id)] = 1
+        else:
+            data[str(member.id)] += 1
+
+        with open("donut/warnings.json", "w") as f:
+            json.dump(data, f)
+        
+        await ctx.send(embed=embed_success(f"{str(member)} was warned by {str(ctx.author)}", f"Current total warnings: {data[str(member.id)]}"))
+
+    @commands.command(aliases=["warnings"])
+    @commands.guild_only()
+    @commands.cooldown(1, 5, commands.BucketType.user)
+    async def warns(self, ctx, member: discord.Member):
+        with open("donut/warnings.json", "r") as f:
+            data=json.load(f)
+
+        if str(member.id) in data:
+            warns = data[str(member.id)]
+        else:
+            warns = 0
+
+        await ctx.send(embed=embed_success(f"{str(member)} has {warns} Warnings"))
+        
     # ----------------------- FUNCTIONS -----------------------
 
 # Adding the Cog Object
