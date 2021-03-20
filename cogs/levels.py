@@ -151,6 +151,7 @@ Contact me if you are interested in a custom Bot
 
     @commands.command()
     @commands.guild_only()
+    @commands.has_guild_permissions(kick_members=True)
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def warn(self, ctx, member: discord.Member):
         with open("donut/warnings.json", "r") as f:
@@ -165,6 +166,27 @@ Contact me if you are interested in a custom Bot
             json.dump(data, f)
         
         await ctx.send(embed=embed_success(f"{str(member)} was warned by {str(ctx.author)}", f"Current total warnings: {data[str(member.id)]}"))
+
+    @commands.command(aliases=["pardon"])
+    @commands.guild_only()
+    @commands.has_guild_permissions(kick_members=True)
+    @commands.cooldown(1, 5, commands.BucketType.user)
+    async def unwarn(self, ctx, member: discord.Member):
+        with open("donut/warnings.json", "r") as f:
+            data=json.load(f)
+
+        if str(member.id) not in list(data):
+            data[str(member.id)] = 0
+
+            await ctx.send(embed=embed_error(f"{str(member)} has no warnings"))
+        else:
+            data[str(member.id)] -= 1
+
+            await ctx.send(embed=embed_success(f"{str(member)} was unwarned by {str(ctx.author)}", f"Current total warnings: {data[str(member.id)]}"))
+
+        with open("donut/warnings.json", "w") as f:
+            json.dump(data, f)
+        
 
     @commands.command(aliases=["warnings"])
     @commands.guild_only()

@@ -28,5 +28,6 @@
     "temprole": "Specify role, member & time to give the Member a role for a specific time (manage roles needed)",
     "nickname": "Give the specified person a new nickname",
     "warns": "See how many warnings a member has with this command",
-    "warn": "Warn a member. (Kick-member permissions required)"
+    "warn": "Warn a member. (Kick-member permissions required)",
+    "unwarn": "Un-Warn a member, e.g. when you did a mistake (Kick-member permissions required)"
 }
