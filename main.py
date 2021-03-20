@@ -45,11 +45,7 @@ def get_custom_color():
 @bot.event
 async def on_ready():
     await bot.change_presence(activity=discord.Game(name=STATUS)) #<<<<------- 
-    with open("donut/levels.json", "r") as f:
-        leveling=json.load(f)
     print("ready and good to go")
-
-    print("process finished")
 
 # Error Handler
 @bot.event
