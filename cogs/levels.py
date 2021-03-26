@@ -49,10 +49,17 @@ Contact me if you are interested in a custom Bot
         await ctx.send(embed=embed_bot)
 
     # Mini Command for simple testing
-    @commands.command()
-    async def bake(self, ctx):
-        gif = random.choice(["https://tenor.com/view/tim-hortons-cookies-delicious-yummy-national-cookie-day-gif-16659532", "https://tenor.com/view/missallthingsawesome-awesomelystudio-pink-pink-queen-queen-of-pink-gif-16432520", "https://tenor.com/view/how-is-eating-it-pusheen-bake-cookies-gif-16199799", "https://tenor.com/view/pusheen-bake-baking-cat-gif-6080184", "https://tenor.com/view/e22-macaron-macarons-macaroon-macaroons-gif-19095594", "https://tenor.com/view/chocolate-charlotte-cake-cake-delicious-dessert-sweet-gif-17857749", "https://tenor.com/view/cangrejo-perreador-dance-croissant-gif-8133122"])
-        await ctx.send(gif)
+#    @commands.command()
+#    async def bake(self, ctx):
+#        gif = random.choice([
+#            "https://tenor.com/view/tim-hortons-cookies-delicious-yummy-national-cookie-day-gif-16659532", 
+#            "https://tenor.com/view/missallthingsawesome-awesomelystudio-pink-pink-queen-queen-of-pink-gif-16432520", 
+#            "https://tenor.com/view/how-is-eating-it-pusheen-bake-cookies-gif-16199799", 
+#            "https://tenor.com/view/pusheen-bake-baking-cat-gif-6080184", 
+#            "https://tenor.com/view/e22-macaron-macarons-macaroon-macaroons-gif-19095594", 
+#            "https://tenor.com/view/chocolate-charlotte-cake-cake-delicious-dessert-sweet-gif-17857749", 
+#            "https://tenor.com/view/cangrejo-perreador-dance-croissant-gif-8133122"])
+#        await ctx.send(gif)
         
     @commands.command()
     @commands.cooldown(1, 5, commands.BucketType.user)

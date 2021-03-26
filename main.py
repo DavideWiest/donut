@@ -15,7 +15,7 @@ info_color = discord.Color.dark_purple()
 
 # Important Variables
 TOKEN = "Nzg5MTQ3MDI0MzQ3MTAzMjg0.X9t0cA.xRp2nWk3pDLVFYiuX2GU3l3jWrQ"
-STATUS = " -help | " + "for Art Bakery" + " by Daev#7540"
+STATUS = " -help | " + "for the Art Meadow" + " by Daev#7540"
 
 
 # Creating Bot instance with intents
@@ -170,7 +170,7 @@ async def votereminder():
 
         await channel.send(role.mention)
 
-        await channel.send(embed=discord.Embed(color=get_custom_color(), description=f"Time to vote for Donut's amazing Art Bakery again! [Vote here](https://top.gg/servers/756195902229577739/vote) (Log in first!)"))
+        await channel.send(embed=discord.Embed(color=get_custom_color(), description=f"Time to vote for your favorite Art-server again! [Vote here](https://top.gg/servers/756195902229577739/vote) (Log in first!)"))
 
         await asyncio.sleep(60 * 60 * 12.1)
 
