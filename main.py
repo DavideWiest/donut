@@ -14,7 +14,7 @@ from datetime import timedelta
 info_color = discord.Color.dark_purple()
 
 # Important Variables
-TOKEN = "Nzg5MTQ3MDI0MzQ3MTAzMjg0.X9t0cA.xRp2nWk3pDLVFYiuX2GU3l3jWrQ"
+TOKEN = "ODI1MDcwMDk3OTEwNzI2NjU3.YF4kaA.U9YxmzAPFJ_MvnywAgJGwDCpFtU"
 STATUS = " -help | " + "for Art Bakery" + " by Daev#7540"
 
 
