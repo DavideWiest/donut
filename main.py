@@ -15,7 +15,7 @@ info_color = discord.Color.dark_purple()
 
 # Important Variables
 TOKEN = "ODI1MDcwMDk3OTEwNzI2NjU3.YF4kaA.U9YxmzAPFJ_MvnywAgJGwDCpFtU"
-STATUS = " -help | " + "for Art Bakery" + " by Daev#7540"
+STATUS = "-help | " + "4 the Art Garden" + " by .Daev#7540"
 
 
 # Creating Bot instance with intents
@@ -116,37 +116,37 @@ if __name__ == "__main__":
 
 guildid = 756195902229577739
 
-bumproleid = 763546928381820928
-bumpchannelid = 758389116047720459
+#bumproleid = 763546928381820928
+#bumpchannelid = 758389116047720459
+#
+#async def bumpreminder():
+#    await asyncio.sleep(2)
+#    await bot.wait_until_ready()
+#
+#    time = datetime.now()
+#    if time.hour < 12:
+#        start_time = datetime.now().replace(hour=12, minute=0, microsecond=0)
+#    else:
+#        start_time = datetime.now().replace(hour=12, minute=0, microsecond=0)
+#        start_time = start_time + timedelta(days=1)
+#
+#    time_delta = (start_time - time).total_seconds()
+#    print(str(time_delta) + '\n' + str(round(time_delta)))
+#    await asyncio.sleep(round(time_delta))
+#
+#    while not bot.is_closed():
+#        channel = bot.get_channel(bumpchannelid)
+#        guild = bot.get_guild(guildid)
+#        role = guild.get_role(bumproleid)
+#
+#        await channel.send(role.mention)
+#
+#        await channel.send(embed=discord.Embed(color=get_custom_color(), description=f"<:moon:787193302004924427> Time to bump the server with !d bump <:moon:787193302004924427> "))
+#
+#        await asyncio.sleep(60 * 60 * 2.1)
 
-async def bumpreminder():
-    await asyncio.sleep(2)
-    await bot.wait_until_ready()
-
-    time = datetime.now()
-    if time.hour < 12:
-        start_time = datetime.now().replace(hour=12, minute=0, microsecond=0)
-    else:
-        start_time = datetime.now().replace(hour=12, minute=0, microsecond=0)
-        start_time = start_time + timedelta(days=1)
-
-    time_delta = (start_time - time).total_seconds()
-    print(str(time_delta) + '\n' + str(round(time_delta)))
-    await asyncio.sleep(round(time_delta))
-
-    while not bot.is_closed():
-        channel = bot.get_channel(bumpchannelid)
-        guild = bot.get_guild(guildid)
-        role = guild.get_role(bumproleid)
-
-        await channel.send(role.mention)
-
-        await channel.send(embed=discord.Embed(color=get_custom_color(), description=f"<:moon:787193302004924427> Time to bump the server with !d bump <:moon:787193302004924427> "))
-
-        await asyncio.sleep(60 * 60 * 2.1)
-
-voteroleid = 766471067173781534
-votechannelid = 763381534907957248
+voteroleid = 827036573497294858
+votechannelid = 825468696083562508
 
 async def votereminder():
     await asyncio.sleep(2)
@@ -170,12 +170,12 @@ async def votereminder():
 
         await channel.send(role.mention)
 
-        await channel.send(embed=discord.Embed(color=get_custom_color(), description=f"Time to vote for Donut's amazing Art Bakery again! [Vote here](https://top.gg/servers/756195902229577739/vote) (Log in first!)"))
+        await channel.send(embed=discord.Embed(color=get_custom_color(), description=f"Time to vote for Donut's amazing Art Garden again! [Vote here](https://top.gg/servers/817239422881103893/vote) (Log in first!)"))
 
         await asyncio.sleep(60 * 60 * 12.1)
 
 
-bot.loop.create_task(bumpreminder())
+#bot.loop.create_task(bumpreminder())
 bot.loop.create_task(votereminder())
 
         
