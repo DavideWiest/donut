@@ -43,7 +43,7 @@ class Starboard(commands.Cog):
             for i in message.reactions:
 
                 # Check if more than 5 people "upvoted" this message
-                if str(i.emoji) in (':butterfly~1:', '<:butterfly~1:827035443702530078>'):
+                if str(i.emoji) in (':butterfly:', '<:butterfly:826334080445448193>'):
                     if i.count == 5: #Change this later to 5 ------------------------------- done
                         isvalid = True
                         for i in message.reactions:
@@ -99,9 +99,9 @@ class Starboard(commands.Cog):
         
         count = 0
         for i in message.reactions:
-            if str(i.emoji) in (':butterfly~1:', '<:butterfly~1:827035443702530078>'):
+            if str(i.emoji) in (':butterfly:', '<:butterfly:826334080445448193>'):
                     count = i.count
-        starmsg = await starboard.send(f"<:butterfly~1:827035443702530078> **{count}** {message.channel.mention} [{message.channel.id}]")
+        starmsg = await starboard.send(f"<:butterfly:826334080445448193> **{count}** {message.channel.mention} [{message.channel.id}]")
         await starboard.send(embed=embed_starboard)
         #print(4)
         channel_fetch2 = starmsg.channel.id
@@ -113,11 +113,11 @@ class Starboard(commands.Cog):
             message = self.bot.get_channel(channel_fetch)
             message = await message.fetch_message(id_fetch)
             for i in message.reactions:
-                if str(i.emoji) in (':butterfly~1:', '<:butterfly~1:827035443702530078>') and i.count != count:
+                if str(i.emoji) in (':butterfly:', '<:butterfly:826334080445448193>') and i.count != count:
                     count = i.count
                     starmsg = self.bot.get_channel(channel_fetch2)
                     starmsg = await starmsg.fetch_message(id_fetch2)
-                    await starmsg.edit(content=f"<:butterfly~1:827035443702530078> **{count}** {message.channel.mention} [{message.channel.id}]")
+                    await starmsg.edit(content=f"<:butterfly:826334080445448193> **{count}** {message.channel.mention} [{message.channel.id}]")
     
     @commands.Cog.listener()
     async def on_raw_reaction_add(self, payload):
