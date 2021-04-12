@@ -170,7 +170,7 @@ async def votereminder():
 
         await channel.send(role.mention)
 
-        await channel.send(embed=discord.Embed(color=get_custom_color(), description=f"Time to vote for Donut's amazing Art Garden again! [Vote here](https://top.gg/servers/817239422881103893/vote) (Log in first!)"))
+        await channel.send(embed=discord.Embed(color=get_custom_color(), description=f"Please vote for us using this link: https://top.gg/servers/817239422881103893/vote To vote you simply need to tap the link to log in, then exit the tab. Then tap the link again and press the vote button!"))
 
         await asyncio.sleep(60 * 60 * 12.1)
 
