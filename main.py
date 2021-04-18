@@ -114,7 +114,7 @@ if __name__ == "__main__":
     for extension in initial_extentsions:
         bot.load_extension(extension)
 
-guildid = 756195902229577739
+guildid = 817239422881103893
 
 #bumproleid = 763546928381820928
 #bumpchannelid = 758389116047720459
@@ -145,7 +145,7 @@ guildid = 756195902229577739
 #
 #        await asyncio.sleep(60 * 60 * 2.1)
 
-voteroleid = 827036573497294858
+voteroleid = 833146945194164234
 votechannelid = 825468696083562508
 
 async def votereminder():
@@ -168,7 +168,7 @@ async def votereminder():
         guild = bot.get_guild(guildid)
         role = guild.get_role(voteroleid)
 
-        await channel.send(role.mention)
+        await channel.send(str(role.mention))
 
         await channel.send(embed=discord.Embed(color=get_custom_color(), description=f"Please vote for us using this link: https://top.gg/servers/817239422881103893/vote To vote you simply need to tap the link to log in, then exit the tab. Then tap the link again and press the vote button!"))
 
