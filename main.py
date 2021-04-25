@@ -145,7 +145,7 @@ guildid = 817239422881103893
 #
 #        await asyncio.sleep(60 * 60 * 2.1)
 
-voteroleid = 828728856079761458
+voteroleid = 825241153774551071
 votechannelid = 825468696083562508
 
 async def votereminder():
