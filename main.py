@@ -145,7 +145,7 @@ guildid = 817239422881103893
 #
 #        await asyncio.sleep(60 * 60 * 2.1)
 
-voteroleid = 833146945194164234
+voteroleid = 828728856079761458
 votechannelid = 825468696083562508
 
 async def votereminder():
@@ -161,7 +161,7 @@ async def votereminder():
 
     time_delta = (start_time - time).total_seconds()
     print(str(time_delta) + '\n' + str(round(time_delta)))
-    await asyncio.sleep(round(time_delta))
+    #await asyncio.sleep(round(time_delta))
 
     while not bot.is_closed():
         channel = bot.get_channel(votechannelid)
@@ -170,7 +170,7 @@ async def votereminder():
 
         await channel.send(str(role.mention))
 
-        await channel.send(embed=discord.Embed(color=get_custom_color(), description=f"Please vote for us using this link: https://top.gg/servers/817239422881103893/vote To vote you simply need to tap the link to log in, then exit the tab. Then tap the link again and press the vote button!"))
+        await channel.send(embed=discord.Embed(color=discord.Color.purple(), description=f"Please vote for us using this link: https://top.gg/servers/817239422881103893/vote To vote you simply need to tap the link to log in, then exit the tab. Then tap the link again and press the vote button!"))
 
         await asyncio.sleep(60 * 60 * 12.1)
 
