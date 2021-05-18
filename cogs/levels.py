@@ -17,7 +17,7 @@ def create_level_list():
     level_list[0] = 1
     for i in range(0, 100):
         level_list[num] = i + 2
-        num = round(prev_num + prev_num * 0.40)
+        num = round(prev_num + prev_num * 0.20 + 5000)
         prev_num = num
 
 # Basic Embed to display Errors triggered
