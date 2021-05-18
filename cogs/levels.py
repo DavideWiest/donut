@@ -12,10 +12,13 @@ import random
 level_list = {}
 
 def create_level_list():
-    num = 10
-    for i in range(1, 100):
-        level_list[str(num)] = i
-        num = round(num * 1,1)
+    num = 15
+    prev_num = 15
+    level_list[0] = 1
+    for i in range(0, 100):
+        level_list[num] = i + 2
+        num = round(prev_num + prev_num * 0.40)
+        prev_num = num
 
 # Basic Embed to display Errors triggered
 def embed_error(input1, input2=None):
@@ -51,14 +54,14 @@ class Levels(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message):
-        if message.channel != None:
+        if message.channel != None and message.author.bot == False:
             with open("levels.json", "r") as f:
                 file = json.load(f)
 
             if str(message.author.id) in list(file):
                 file[str(message.author.id)] += 1
             else:
-                file[str(message.author.id)] = 0
+                file[str(message.author.id)] = 1
 
             if level_list == {}:
                 create_level_list()
@@ -80,19 +83,20 @@ class Levels(commands.Cog):
                 file[str(ctx.author.id)] = 0
 
         if level_list == {}:
-                create_level_list()
+            create_level_list()
 
         prev_i = 0
         msgs_2 = 0
+        counter = 0
         for i in list(level_list):
             if file[str(ctx.author.id)] > prev_i and file[str(ctx.author.id)] < i:
                 counter = prev_i
+                msgs_2 = i - file[str(ctx.author.id)]
 
             prev_i = i
-            msgs_2 = i - file[str(ctx.author.id)]
         level = level_list[counter]
 
-        await ctx.send(embed=discord.Embed(color=get_custom_color(), descrtiption=f"{ctx.author.name}: You are currently on level **{level}** \n with **{file[str(ctx.author.id)]}** messages sent in total.\n\n About {round(msgs_2 / 10) * 10} Messages more for the next level. Happy talking!"))
+        await ctx.send(embed=discord.Embed(color=get_custom_color(), description=f"{ctx.author.name}: You are currently on level **{level}** \n with **{file[str(ctx.author.id)]}** messages sent in total.\n\n About {round(msgs_2 / 10) * 10} Messages more for the next level. Happy talking!"))
 
     @commands.command()
     @commands.guild_only()
@@ -106,17 +110,31 @@ class Levels(commands.Cog):
         list2 = []
 
         for i in file:
+            m = ctx.guild.get_member(int(i))
+            if m.bot == True:
+                continue
+            
+
             prev_i = 0
+            counter = 0
             for i2 in list(level_list):
-                if file[str(ctx.author.id)] > prev_i and file[str(ctx.author.id)] < i2:
+                if file[str(i)] > prev_i and file[str(i)] < i2:
                     counter = prev_i
 
                 prev_i = i2
-            level = level_list[counter]
-            name = str(ctx.guild.get_member(int(i)))
-            list2.append([name, file[i], level])
 
-        list2 = sorted(list2, key=lambda x: list2[x][1], reverse=True)
+            
+            try:
+                level = level_list[counter]
+            except:
+                level = 1
+            
+            name = str(ctx.guild.get_member(int(i)))
+            
+            list2.append([name, file[i], level])
+            
+        
+        list2 = sorted(list2, key=lambda x: x[1], reverse=True)
 
         ranking_str = ["Rank; Level; Messages sent; Name"]
         counter = 0
@@ -124,7 +142,7 @@ class Levels(commands.Cog):
         for i in list2:
             counter += 1
 
-            if counter >= 11 and i[0] != str(ctx.author):
+            if counter >= 12 and i[0] != str(ctx.author):
                 pass
 
             for number in range(1, 6):
@@ -132,21 +150,17 @@ class Levels(commands.Cog):
                     i[1] = str(i[1]) + " "
 
             for number in range(1, 3):
-                if len(str(i[1])) < 3:
-                    i[2] = str(i[1]) + " "
+                if len(str(i[2])) < 3:
+                    i[2] = str(i[2]) + " "
             
             if i[0] == str(ctx.author):
                 ranking_str.append(f"**{counter}.   {i[2]}  {i[1]}  {i[0]}**")
             else:
                 ranking_str.append(f"{counter}.   {i[2]}  {i[1]}  {i[0]}")
 
-
         ranking_str = "\n".join(ranking_str)
 
         await ctx.send(embed=discord.Embed(color=get_custom_color(), title="Art Garden's leaderboard", description=ranking_str))
-
-
-
 
 
     # Simple Command to inform People about Me (Daev) making Bots
