@@ -115,9 +115,12 @@ class Levels(commands.Cog):
         list2 = []
 
         for i in list(file):
-            m = ctx.guild.get_member(int(i))
-            if m.bot == True:
-                continue
+            try:
+                m = ctx.guild.get_member(int(i))
+                if m.bot == True:
+                    continue
+            except:
+                pass
             
             prev_i = 0
             counter = 0
@@ -304,7 +307,7 @@ Contact me if you are interested in your own bot
     @commands.has_guild_permissions(kick_members=True)
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def warn(self, ctx, member: discord.Member):
-        with open("donut/warnings.json", "r") as f:
+        with open("warnings.json", "r") as f:
             data=json.load(f)
 
         if str(member.id) not in list(data):
@@ -312,8 +315,10 @@ Contact me if you are interested in your own bot
         else:
             data[str(member.id)] += 1
 
-        with open("donut/warnings.json", "w") as f:
+        with open("warnings.json", "w") as f:
             json.dump(data, f)
+        
+        await member.send(embed=embed_error(f"You have been warned by {str(ctx.author)}", f"Current total warnings: {data[str(member.id)]}"))
         
         await ctx.send(embed=embed_success(f"{str(member)} was warned by {str(ctx.author)}", f"Current total warnings: {data[str(member.id)]}"))
 
@@ -322,7 +327,7 @@ Contact me if you are interested in your own bot
     @commands.has_guild_permissions(kick_members=True)
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def unwarn(self, ctx, member: discord.Member):
-        with open("donut/warnings.json", "r") as f:
+        with open("warnings.json", "r") as f:
             data=json.load(f)
 
         if str(member.id) not in list(data):
@@ -334,7 +339,7 @@ Contact me if you are interested in your own bot
 
             await ctx.send(embed=embed_success(f"{str(member)} was unwarned by {str(ctx.author)}", f"Current total warnings: {data[str(member.id)]}"))
 
-        with open("donut/warnings.json", "w") as f:
+        with open("warnings.json", "w") as f:
             json.dump(data, f)
         
 
@@ -342,7 +347,7 @@ Contact me if you are interested in your own bot
     @commands.guild_only()
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def warns(self, ctx, member: discord.Member):
-        with open("donut/warnings.json", "r") as f:
+        with open("warnings.json", "r") as f:
             data=json.load(f)
 
         if str(member.id) in data:
