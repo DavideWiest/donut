@@ -75,12 +75,15 @@ class Levels(commands.Cog):
                 json.dump(file, f2)
 
     @commands.command()
-    async def rank(self, ctx):
+    async def rank(self, ctx, member: discord.Member=None):
+        if member == None:
+            member = ctx.author
+
         with open("levels.json", "r") as f:
             file = json.load(f)
 
-        if str(ctx.author.id) not in list(file):
-                file[str(ctx.author.id)] = 0
+        if str(member.id) not in list(file):
+                file[str(member.id)] = 0
 
         if level_list == {}:
             create_level_list()
@@ -89,14 +92,16 @@ class Levels(commands.Cog):
         msgs_2 = 0
         counter = 0
         for i in list(level_list):
-            if file[str(ctx.author.id)] > prev_i and file[str(ctx.author.id)] < i:
+            if file[str(member.id)] > prev_i and file[str(member.id)] < i:
                 counter = prev_i
-                msgs_2 = i - file[str(ctx.author.id)]
+                msgs_2 = i - file[str(member.id)]
 
             prev_i = i
         level = level_list[counter]
 
-        await ctx.send(embed=discord.Embed(color=get_custom_color(), description=f"{ctx.author.name}: You are currently on level **{level}** \n with **{file[str(ctx.author.id)]}** messages sent in total.\n\n About {round(msgs_2 / 10) * 10} Messages more for the next level. Happy talking!"))
+        grammarly_correct = " is " if member != ctx.author else ": You are "
+
+        await ctx.send(embed=discord.Embed(color=get_custom_color(), description=f"{member.name}{grammarly_correct}currently on level **{level}** \n with **{file[str(member.id)]}** messages sent in total.\n\n About {round(msgs_2 / 10) * 10} Messages more for the next level. Happy talking!"))
 
     @commands.command()
     @commands.guild_only()
@@ -143,7 +148,7 @@ class Levels(commands.Cog):
             counter += 1
 
             if counter >= 12 and i[0] != str(ctx.author):
-                pass
+                break
 
             for number in range(1, 6):
                 if len(str(i[1])) < 6:
@@ -161,6 +166,27 @@ class Levels(commands.Cog):
         ranking_str = "\n".join(ranking_str)
 
         await ctx.send(embed=discord.Embed(color=get_custom_color(), title="Art Garden's leaderboard", description=ranking_str))
+
+    @commands.command(aliases=["blööm"])
+    async def bloom(self, ctx):
+        gif = random.choice([
+            "https://tenor.com/view/floral-gif-7706411", 
+            "https://tenor.com/view/relax-rain-anime-flower-gif-15454955", 
+            "https://tenor.com/view/sarah-flower-gif-19730157", 
+            "https://tenor.com/view/anime-anime-gif-flower-rain-gif-19978784", 
+            "https://tenor.com/view/anime-flower-aesthetic-rose-gif-9490271", 
+            "https://tenor.com/view/flowers-anime-anime-night-anime-flower-aesthetic-gif-20174502", 
+            "https://tenor.com/view/flowers-flower-pretty-anime-aesthetic-gif-18783703",
+            "https://tenor.com/view/flowers-anime-cute-kawaii-gif-9032319",
+            "https://tenor.com/view/yellow-flower-rose-petals-gif-17032738",
+            "https://tenor.com/view/blossom-flowers-cherry-blowers-bloom-gif-16747555",
+            "https://tenor.com/view/flowers-bloom-blossom-flower-tree-gif-5509954",
+            "https://tenor.com/view/anime-anime-gif-water-flower-gif-19978794",
+            "https://tenor.com/view/kawaii-pink-anime-cherry-blossom-pastel-gif-20721840",
+            "https://tenor.com/view/spring-fall-weather-peaceful-anime-gif-17094122",
+            "https://tenor.com/view/rose-flower-dew-dripping-water-gif-8730197"])
+        await ctx.send(gif)
+        
 
 
     # Simple Command to inform People about Me (Daev) making Bots
