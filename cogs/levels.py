@@ -114,12 +114,11 @@ class Levels(commands.Cog):
         
         list2 = []
 
-        for i in file:
+        for i in list(file):
             m = ctx.guild.get_member(int(i))
             if m.bot == True:
                 continue
             
-
             prev_i = 0
             counter = 0
             for i2 in list(level_list):
