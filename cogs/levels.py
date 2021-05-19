@@ -147,7 +147,7 @@ class Levels(commands.Cog):
         for i in list2:
             counter += 1
 
-            if counter >= 12 and i[0] != str(ctx.author):
+            if counter >= 16 and i[0] != str(ctx.author):
                 break
 
             for number in range(1, 6):
