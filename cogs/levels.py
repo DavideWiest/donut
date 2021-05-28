@@ -150,7 +150,7 @@ class Levels(commands.Cog):
             counter += 1
 
             if counter >= 16 and i[0] != str(ctx.author):
-                break
+                continue
 
             for number in range(1, 6):
                 if len(str(i[1])) < 6:
@@ -306,9 +306,11 @@ Contact me if you are interested in your own bot
     @commands.guild_only()
     @commands.has_guild_permissions(kick_members=True)
     @commands.cooldown(1, 5, commands.BucketType.user)
-    async def warn(self, ctx, member: discord.Member):
+    async def warn(self, ctx, member: discord.Member, *, reason=None):
         with open("warnings.json", "r") as f:
             data=json.load(f)
+
+        reason = f"Reason: {reason}" if reason != None else "No Reason was given"
 
         if str(member.id) not in list(data):
             data[str(member.id)] = 1
@@ -318,9 +320,9 @@ Contact me if you are interested in your own bot
         with open("warnings.json", "w") as f:
             json.dump(data, f)
         
-        await member.send(embed=embed_error(f"You have been warned by {str(ctx.author)}", f"Current total warnings: {data[str(member.id)]}"))
+        await member.send(embed=embed_error(f"You have been warned by {str(ctx.author)}", f"Reason: `{reason}` \n\nCurrent total warnings: {data[str(member.id)]}"))
         
-        await ctx.send(embed=embed_success(f"{str(member)} was warned by {str(ctx.author)}", f"Current total warnings: {data[str(member.id)]}"))
+        await ctx.send(embed=embed_success(f"{str(member)} was warned by {str(ctx.author)}", f"Reason: `{reason}` \n\nCurrent total warnings: {data[str(member.id)]}"))
 
     @commands.command(aliases=["pardon"])
     @commands.guild_only()

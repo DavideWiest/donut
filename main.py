@@ -97,7 +97,7 @@ async def on_command_error(ctx, error):
     # Else statement to catch all Errors of other Categories than the above ones
     else:
         if str(error).startswith("Command raised an exception: Forbidden: 403 Forbidden (error code: 50013)"):
-            await ctx.send(embed=embed_error("I'm missing Permissions to run this Command", str(error)))
+            await ctx.send(embed=embed_error("I cannot take measure on a member that has equal Permissions as me (administrator or owner)", str(error)))
         else:
             await ctx.send(embed=embed_error(f"An Error occured within command {ctx.command.name}"))
             print(error)

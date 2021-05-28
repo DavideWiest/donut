@@ -13,7 +13,7 @@
     "delrole": "Delete a Role (Reverses -addrole)", 
     "help": "The help command that either lists all commands or helps you with a specific one", 
     "mute": "Mute someone. That way the Person cannot talk", 
-    "rank": "See your Rank Server-Wide", 
+    "rank": "Check your level", 
     "multipoll": "Make the most advanced Poll you'll ever need (Schema: Title; Q1; Q2; ... (up to 10) color= (a color like green, purple, ...) end=420 (when the poll ends in minutes)", 
     "kick": "Kick a Member from the Server", 
     "tempmute": "Mute Somone for an amount of time (Schema for Time: 1w 1d 1h 1m 1s Vary the Numbers)",
@@ -29,5 +29,6 @@
     "nickname": "Give the specified person a new nickname",
     "warns": "See how many warnings a member has with this command",
     "warn": "Warn a member. (Kick-member permissions required)",
-    "unwarn": "Un-Warn a member, e.g. when you did a mistake (Kick-member permissions required)"
+    "unwarn": "Un-Warn a member, e.g. when you did a mistake (Kick-member permissions required)",
+    "bloom": "Let it bloom!"
 }

@@ -526,8 +526,8 @@ class Moderation(commands.Cog):
             embed_poll.title = "Poll Ended"
             await msg.edit(embed=embed_poll)
 
-            
-
+    
+            #kick
 
     # Simple Poll Command
     @commands.command(aliases=["create-poll"])
