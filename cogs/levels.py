@@ -242,7 +242,7 @@ Contact me if you are interested in your own bot
     @commands.command()
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def vote(self, ctx):
-        await ctx.send(embed=discord.Embed(color=discord.Color.green(), description="Click [here](https://top.gg/servers/817239422881103893/vote) to vote. Just click on the link, log into top.gg, and exit the link. Then click the link again, watch a 5 second add, and hit the vote button! Thank you! <:lovebunny:849751565211664404>"))
+        await ctx.send(embed=discord.Embed(color=discord.Color.green(), description="Click [here](https://top.gg/servers/817239422881103893/vote) to vote. Just click on the link, log into top.gg, and exit the link. Then click the link again, watch a 5 second add, and hit the vote button! Thank you!"))
 
     @commands.command()
     @commands.guild_only()
