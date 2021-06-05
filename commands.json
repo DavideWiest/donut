@@ -30,5 +30,6 @@
     "warns": "See how many warnings a member has with this command",
     "warn": "Warn a member. (Kick-member permissions required)",
     "unwarn": "Un-Warn a member, e.g. when you did a mistake (Kick-member permissions required)",
-    "bloom": "Let it bloom!"
+    "bloom": "Let it bloom!",
+    "vote": "This command shows you where and how to vote for the server"
 }

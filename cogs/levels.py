@@ -6,6 +6,7 @@ import json
 from discord.utils import get
 from fuzzywuzzy import fuzz
 from fuzzywuzzy import process
+import datetime
 import asyncio
 import random
 
@@ -239,6 +240,11 @@ Contact me if you are interested in your own bot
         await ctx.send(embed=discord.Embed(color=get_custom_color(), description="Reminder: \n" + message))
 
     @commands.command()
+    @commands.cooldown(1, 5, commands.BucketType.user)
+    async def vote(self, ctx, member: discord.Member):
+        await ctx.send(embed=discord.Embed(color=discord.Color.green(), description="Click here to vote [here](https://top.gg/servers/817239422881103893/vote). Just click on the link, log into top.gg, and exit the link. Then click the link again, watch a 5 second add, and hit the vote button! Thank you! <:lovebunny:849751565211664404>"))
+
+    @commands.command()
     @commands.guild_only()
     @commands.has_guild_permissions(manage_roles=True)
     @commands.cooldown(1, 5, commands.BucketType.user)
@@ -320,9 +326,14 @@ Contact me if you are interested in your own bot
         with open("warnings.json", "w") as f:
             json.dump(data, f)
         
-        await member.send(embed=embed_error(f"You have been warned by {str(ctx.author)}", f"Reason: `{reason}` \n\nCurrent total warnings: {data[str(member.id)]}"))
+        await member.send(embed=embed_error(f"You have been warned [Art Garden]", f"Reason: `{reason}` \n\nCurrent total warnings: {data[str(member.id)]}"))
         
-        await ctx.send(embed=embed_success(f"{str(member)} was warned by {str(ctx.author)}", f"Reason: `{reason}` \n\nCurrent total warnings: {data[str(member.id)]}"))
+        await ctx.send(embed=embed_success(f"{str(member)} has been warned", f"Reason: `{reason}` \n\nCurrent total warnings: {data[str(member.id)]}"))
+
+        channel = self.bot.get_channel(825206612196720640)
+        crnt_time = datetime.datetime.now()
+        crnt_time = crnt_time.strftime("%B %d, %X")
+        await channel.send(embed=discord.Embed(color=discord.Color.red(), title=f"{str(member)} has been warned | Moderator: {str(ctx.author)}", description=f"{crnt_time} \n\nReason: `{reason}` \n\nCurrent total warnings: {data[str(member.id)]}"))
 
     @commands.command(aliases=["pardon"])
     @commands.guild_only()
@@ -339,7 +350,7 @@ Contact me if you are interested in your own bot
         else:
             data[str(member.id)] -= 1
 
-            await ctx.send(embed=embed_success(f"{str(member)} was unwarned by {str(ctx.author)}", f"Current total warnings: {data[str(member.id)]}"))
+            await ctx.send(embed=embed_success(f"{str(member)} was unwarned", f"Current total warnings: {data[str(member.id)]}"))
 
         with open("warnings.json", "w") as f:
             json.dump(data, f)
