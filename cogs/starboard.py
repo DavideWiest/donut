@@ -54,6 +54,7 @@ class Starboard(commands.Cog):
             await message.add_reaction("\U00002714")
         return isvalid
 
+    #827035649461977120
     # Function to get the Message items and send them to the (customizable) starboard-channel
     async def starboard_send(self, message):
         channel_fetch = message.channel.id
@@ -69,7 +70,7 @@ class Starboard(commands.Cog):
         embed_starboard.set_author(name=message.author.name, icon_url=str(message.author.avatar_url))
         embed_starboard.add_field(name="Jump to Original", value=f"[**Jump**]({message.jump_url})")
         
-        #print(3)
+        print(3)
         # Finding an Image, if it exists
         image = "None found"
         for i in message.attachments:
@@ -103,7 +104,7 @@ class Starboard(commands.Cog):
                     count = i.count
         starmsg = await starboard.send(f"<:butterfly:826334080445448193> **{count}** {message.channel.mention} [{message.channel.id}]")
         await starboard.send(embed=embed_starboard)
-        #print(4)
+        print(4)
         channel_fetch2 = starmsg.channel.id
         id_fetch2 = starmsg.id
 
@@ -121,11 +122,11 @@ class Starboard(commands.Cog):
     
     @commands.Cog.listener()
     async def on_raw_reaction_add(self, payload):
-        #print(1)
+        print(1)
         if payload.guild_id != None:
             channel = self.bot.get_channel(payload.channel_id)
             message = await channel.fetch_message(payload.message_id)
-            
+            print(1.5)
             # Adding the blacklist for things that should not come to the starboard channel
             with open("donut/storage.json", "r") as f:
                 file=json.load(f)
@@ -138,8 +139,9 @@ class Starboard(commands.Cog):
             if message.channel.id not in blacklist_channels:
 
                 if await self.isvalid(message) == True:
-                    #print(2)
+                    print(2)
                     await self.starboard_send(message)
+                    print(5)
 
 
     # Custom Command to set up the blacklisted Channels from Starboard
