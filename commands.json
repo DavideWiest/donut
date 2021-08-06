@@ -31,5 +31,6 @@
     "warn": "Warn a member. (Kick-member permissions required)",
     "unwarn": "Un-Warn a member, e.g. when you did a mistake (Kick-member permissions required)",
     "bloom": "Let it bloom!",
-    "vote": "This command shows you where and how to vote for the server"
+    "vote": "This command shows you where and how to vote for the server",
+    "controversial": "Start a debate! You can choose from different topics, which are 'law', 'healthcare', 'nutrition', 'politics', 'technology', 'education', 'media', 'sports', 'miscellaneous' (but just \"-controversial\" works fine too!)"
 }

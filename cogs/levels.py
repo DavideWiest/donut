@@ -309,7 +309,6 @@ Contact me if you are interested in your own bot
         await ctx.send(embed=embed_success(f"{member.name}'s new nickname is {nickname}"))
 
     @commands.command(aliases=["controversialtopic"])
-    @commands.has_guild_permissions(manage_nicknames=True)
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def controversial(self, ctx, category: str="all"):
         controversial_topics = {
