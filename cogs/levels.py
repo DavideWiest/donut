@@ -308,6 +308,132 @@ Contact me if you are interested in your own bot
 
         await ctx.send(embed=embed_success(f"{member.name}'s new nickname is {nickname}"))
 
+    @commands.command(aliases=["controversialtopic"])
+    @commands.has_guild_permissions(manage_nicknames=True)
+    @commands.cooldown(1, 5, commands.BucketType.user)
+    async def controversial(self, ctx, category: str="all"):
+        controversial_topics = {
+            "law": 
+                """1. Should abortion be legalized everywhere?
+2. Should the sale of marijuana become legal?
+3. Should the use of drones be regulated?
+4. Should wage equality between women and men be stapled by law?
+5. Should prostitution be made legal?
+6. Should deceased organ donation be made mandatory by law?
+7. Should the death penalty be abolished everywhere?
+8. Should gun ownership by members of the public be banned?
+9. Should parents be held legally responsible for crimes committed by their underaged children?
+10. Should same-sex couples be allowed to wed in religious temples?
+11. Is the assisted suicide of a terminally ill patient moral?
+12. Have religious holidays been taken over by consumerism?
+13. Does donating money to poor people make them even more dependent?
+14. Do interreligious marriages help to bring people closer together?
+15. Is there racism towards Caucasians?
+16. Can torturing a person be justified if it could help to save others?
+17. Should men be encouraged to become stay-at-home fathers?
+18. Should parents exercise control over the relationships of their teenage children?
+19. Is lying justified when it is meant to protect someone?
+20. Can body shaming motivate people to lose weight?
+21. Should there be separate public bathrooms for transgender people?""",
+            "business": 
+                """22. Do free trade deals benefit less well-off countries?
+23. Are family-owned businesses more stable than public companies?
+24. Is the state of the economy the main factor for the birth rate decline in most European countries?
+25. Will an increase in the minimum wage make all people better-off?
+26. Is the sharing economy a temporary phenomenon?
+27. Can protectionism help to reduce unemployment permanently?
+28. Is income equality beneficial for the economy?
+29. Does the advancement of technology have a significant negative impact on jobs in the banking industry?
+30. Should the minting of coins stop?
+31. Will the European Union countries be better off out of the EU?
+32. Does progressive tax improve income equality?""",
+            "healthcare": 
+                """33. Are alternative cancer treatments effective?
+34. Is child vaccination good or bad?
+35. Is forced feeding an effective treatment for anorexia?
+36. Do cigarette label warnings help to reduce the incidences of lung cancer?
+37. Do slim people really have a lower heart disease, all other things being equal?
+38. Can moderate to severe depression be cured without antidepressants?
+39. Should obesity be considered a disease?
+40. Can virtual reality help hospital patients deal with isolation?
+41. Are antibiotics used excessively for the treatment of disease?
+42. Should birth control pills and devices be made free for women?""",
+            "nutrition":
+                """33. Are alternative cancer treatments effective?
+34. Is child vaccination good or bad?
+35. Is forced feeding an effective treatment for anorexia?
+36. Do cigarette label warnings help to reduce the incidences of lung cancer?
+37. Do slim people really have a lower heart disease, all other things being equal?
+38. Can moderate to severe depression be cured without antidepressants?
+39. Should obesity be considered a disease?
+40. Can virtual reality help hospital patients deal with isolation?
+41. Are antibiotics used excessively for the treatment of disease?
+42. Should birth control pills and devices be made free for women?""",
+            "politics": 
+                """33. Are alternative cancer treatments effective?
+34. Is child vaccination good or bad?
+35. Is forced feeding an effective treatment for anorexia?
+36. Do cigarette label warnings help to reduce the incidences of lung cancer?
+37. Do slim people really have a lower heart disease, all other things being equal?
+38. Can moderate to severe depression be cured without antidepressants?
+39. Should obesity be considered a disease?
+40. Can virtual reality help hospital patients deal with isolation?
+41. Are antibiotics used excessively for the treatment of disease?
+42. Should birth control pills and devices be made free for women?""",
+            "technology":
+                """33. Are alternative cancer treatments effective?
+34. Is child vaccination good or bad?
+35. Is forced feeding an effective treatment for anorexia?
+36. Do cigarette label warnings help to reduce the incidences of lung cancer?
+37. Do slim people really have a lower heart disease, all other things being equal?
+38. Can moderate to severe depression be cured without antidepressants?
+39. Should obesity be considered a disease?
+40. Can virtual reality help hospital patients deal with isolation?
+41. Are antibiotics used excessively for the treatment of disease?
+42. Should birth control pills and devices be made free for women?""",
+            "education": 
+                """33. Are alternative cancer treatments effective?
+34. Is child vaccination good or bad?
+35. Is forced feeding an effective treatment for anorexia?
+36. Do cigarette label warnings help to reduce the incidences of lung cancer?
+37. Do slim people really have a lower heart disease, all other things being equal?
+38. Can moderate to severe depression be cured without antidepressants?
+39. Should obesity be considered a disease?
+40. Can virtual reality help hospital patients deal with isolation?
+41. Are antibiotics used excessively for the treatment of disease?
+42. Should birth control pills and devices be made free for women?""",
+            "media": 
+                """83. Should video games with violence be banned?
+84. Do social medial make people more obsessed with the lives of celebrities?
+85. Do romantic movies make men more romantic?
+86. Will TV channels become a thing of the past in 20 years?
+87. Should newspapers offer more recreational content?
+88. Are modern media completely unbiased?
+89. Are space movies realistic?""",
+            "sports": 
+                """90. Should medals be withdrawn from the entire team if one member has broken the rules?
+91. Do great players make great coaches?
+92. Should athletes be forced to retire after a certain age?
+93. Does the growing cost of participating in sports put children off?
+94. Should athletes taking performance-enhancing drugs due to a medical condition be allowed to take part in the Olympics?
+95. Do sports become overly commercialized?""",
+            "miscellaneous": 
+                """96. Is money the primary factor for measuring success?
+97. Can winning the lottery bring you lasting happiness?
+98. Is the simplest solution always the best?
+99. Are more rational people more content with their life?
+100. Should we always trust our instincts?"""
+            
+        }
+        category = category.lower()
+
+        if category not in list(controversial_topics) and category != "all":
+            await ctx.send(embed=embed_error("Select a valid category", f"You can pick those categories (or enter none at all): {', '.join(list(controversial_topics))}"))
+        elif category == "all":
+            random_topic = random.choice(controversial_topics)
+            random_topic = random.choice(controversial_topics[random_topic].split("\n"))
+            await ctx.send(embed=discord.Embed(color=get_custom_color, title=f"{random_topic}"))
+
     @commands.command()
     @commands.guild_only()
     @commands.has_guild_permissions(kick_members=True)
