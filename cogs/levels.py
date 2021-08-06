@@ -433,6 +433,10 @@ Contact me if you are interested in your own bot
             random_topic = random.choice(controversial_topics)
             random_topic = random.choice(controversial_topics[random_topic].split("\n"))
             await ctx.send(embed=discord.Embed(color=get_custom_color, title=f"{random_topic}"))
+        elif category in list(controversial_topics):
+            random_topic = category
+            random_topic = random.choice(controversial_topics[random_topic].split("\n"))
+            await ctx.send(embed=discord.Embed(color=get_custom_color, title=f"{random_topic}"))
 
     @commands.command()
     @commands.guild_only()
