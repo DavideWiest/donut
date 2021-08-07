@@ -3,8 +3,6 @@ import discord
 from discord.ext import commands
 from typing import Union
 from typing import Optional
-from fuzzywuzzy import fuzz
-from fuzzywuzzy import process
 import json
 import asyncio
 from itertools import cycle

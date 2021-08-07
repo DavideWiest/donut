@@ -4,8 +4,6 @@ from discord import message
 from discord.ext import commands
 import json
 from discord.utils import get
-from fuzzywuzzy import fuzz
-from fuzzywuzzy import process
 import datetime
 import asyncio
 import random

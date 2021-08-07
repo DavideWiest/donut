@@ -39,6 +39,7 @@ class Starboard(commands.Cog):
 
     async def isvalid(self, message):
         isvalid = False
+        print(1.8)
         if len(message.reactions) >= 1:
             for i in message.reactions:
 
@@ -49,7 +50,7 @@ class Starboard(commands.Cog):
                         for i in message.reactions:
                             if str(i.emoji) in ('\U00002714') and i.me == True: #, '<:anime_checkmark:819326928603054121>'
                                 isvalid = False
-
+        print(1.9)
         if isvalid == True:
             await message.add_reaction("\U00002714")
         return isvalid
@@ -134,10 +135,10 @@ class Starboard(commands.Cog):
                 blacklist_channels = list(file["starboard-blacklist"])
             else:
                 blacklist_channels = []
-
+            print(1.5)
 
             if message.channel.id not in blacklist_channels:
-
+                print(1.75)
                 if await self.isvalid(message) == True:
                     print(2)
                     await self.starboard_send(message)

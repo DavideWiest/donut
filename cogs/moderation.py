@@ -2,8 +2,7 @@
 import discord
 from discord.ext import commands
 import json
-from fuzzywuzzy import fuzz
-from fuzzywuzzy import process
+
 import asyncio
 import random
 
