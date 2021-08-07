@@ -38,22 +38,22 @@ class Starboard(commands.Cog):
         self.bot = bot
 
     async def isvalid(self, message):
-        isvalid = False
+        isvalid_ = False
         print(1.8)
         if len(message.reactions) >= 1:
             for i in message.reactions:
 
                 # Check if more than 5 people "upvoted" this message
                 if str(i.emoji) in (':butterfly:', '<:butterfly:826334080445448193>'):
-                    if i.count == 5: #Change this later to 5 ------------------------------- done
-                        isvalid = True
+                    if i.count == 5: 
+                        isvalid_ = True
                         for i in message.reactions:
-                            if str(i.emoji) in ('\U00002714') and i.me == True: #, '<:anime_checkmark:819326928603054121>'
-                                isvalid = False
+                            if str(i.emoji) in ('\U00002714') and i.me == True:
+                                isvalid_ = False
         print(1.9)
-        if isvalid == True:
+        if isvalid_ == True:
             await message.add_reaction("\U00002714")
-        return isvalid
+        return isvalid_
 
     #827035649461977120
     # Function to get the Message items and send them to the (customizable) starboard-channel
@@ -139,10 +139,13 @@ class Starboard(commands.Cog):
 
             if message.channel.id not in blacklist_channels:
                 print(1.75)
-                if await self.isvalid(message) == True:
+                isvalid2 = await self.isvalid(message)
+                print(1.875)
+                if isvalid2 == True:
                     print(2)
                     await self.starboard_send(message)
                     print(5)
+                print(6)
 
 
     # Custom Command to set up the blacklisted Channels from Starboard
