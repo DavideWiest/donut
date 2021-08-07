@@ -101,9 +101,9 @@ class Starboard(commands.Cog):
         
         count = 0
         for i in message.reactions:
-            if str(i.emoji) in (':butterfly:', '<:butterfly:826334080445448193>'):
+            if str(i.emoji) in (':xbutterfly:', '<:xbutterfly:826334080445448193>'):
                     count = i.count
-        starmsg = await starboard.send(f"<:butterfly:826334080445448193> **{count}** {message.channel.mention} [{message.channel.id}]")
+        starmsg = await starboard.send(f"<:xbutterfly:826334080445448193> **{count}** {message.channel.mention} [{message.channel.id}]")
         await starboard.send(embed=embed_starboard)
         print(4)
         channel_fetch2 = starmsg.channel.id
@@ -115,11 +115,11 @@ class Starboard(commands.Cog):
             message = self.bot.get_channel(channel_fetch)
             message = await message.fetch_message(id_fetch)
             for i in message.reactions:
-                if str(i.emoji) in (':butterfly:', '<:butterfly:826334080445448193>') and i.count != count:
+                if str(i.emoji) in (':xbutterfly:', '<:xbutterfly:826334080445448193>') and i.count != count:
                     count = i.count
                     starmsg = self.bot.get_channel(channel_fetch2)
                     starmsg = await starmsg.fetch_message(id_fetch2)
-                    await starmsg.edit(content=f"<:butterfly:826334080445448193> **{count}** {message.channel.mention} [{message.channel.id}]")
+                    await starmsg.edit(content=f"<:xbutterfly:826334080445448193> **{count}** {message.channel.mention} [{message.channel.id}]")
     
     @commands.Cog.listener()
     async def on_raw_reaction_add(self, payload):
