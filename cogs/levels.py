@@ -188,6 +188,70 @@ class Levels(commands.Cog):
             "https://tenor.com/view/rose-flower-dew-dripping-water-gif-8730197"])
         await ctx.send(gif)
         
+    @commands.command(aliases=["bönk", "bömnk"])
+    async def bonk(self, ctx, member: discord.Member):
+        guild = self.bot.get_guild(817239422881103893)
+        role = guild.get_role(833058039870259240)
+
+        member.add_roles(role, reason=f"Got Bonked by {str(ctx.author)}")
+
+        await ctx.send("https://tenor.com/view/horny-jail-go-to-horny-jail-bonk-doge-cheems-gif-17582752")
+
+#    @commands.command(aliases=["bönk", "bömnk"])
+    async def tictactoe(self, ctx, member: discord.Member):
+        await ctx.send(embed=discord.Embed(color=get_custom_color(), title=f"Does {member.name} want to participate? (Y/n)"))
+
+        def check(m):
+            return m.author == member
+
+        try:
+            msg = await self.bot.wait_for('message', check=check, timeout=30)
+            partnerfound = True
+        except:
+            await ctx.send(embed=embed_error(f"{ctx.author.name}, go look for a new partner or try later"))
+            partnerfound = False
+        
+        if partnerfound:
+            map = "      |      |      \n-------------\n      |      |      \n-------------\n      |      |      "
+
+            quadrantlist = [
+                "top left",
+                "top",
+                "top right",
+                "middle left",
+                "middle",
+                "middle right",
+                "bottom left",
+                "bottom",
+                "bottom right" 
+            ]
+
+            quadrants_used = [False, False, False, False, False, False, False, False, False]
+
+            def change_map(map, quadrant: str, new_value):
+                maplist = map.split("\n-------------\n")
+                maplist = list(a.split("|") for a in maplist)
+
+                quadrant = quadrantlist.index(quadrant)
+
+                if quadrants_used[quadrant] == True:
+                    return "This tile was already set. Try again"
+
+                if new_value == 0:
+                    new_value = "O" if new_value == 0 else "X"
+                    maplist[quadrant] = f"  {new_value}  "
+
+                    map = ""
+                    for i in maplist:
+                        if maplist.index(i) in (0, 1, 3, 4, 6, 7):
+                            map = map + i + "|"
+                        else:
+                            map = map + i + "\n-------------\n"
+                        
+#            def is_winner(map):
+                
+                
+
 
 
     # Simple Command to inform People about Me (Daev) making Bots
