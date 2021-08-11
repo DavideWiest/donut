@@ -189,6 +189,7 @@ class Levels(commands.Cog):
         await ctx.send(gif)
         
     @commands.command(aliases=["bönk", "bömnk"])
+    @commands.has_guild_permissions(manage_roles=True)
     async def bonk(self, ctx, member: discord.Member):
         guild = self.bot.get_guild(817239422881103893)
         role = guild.get_role(833058039870259240)
