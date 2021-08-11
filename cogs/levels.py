@@ -211,19 +211,22 @@ class Levels(commands.Cog):
         except:
             await ctx.send(embed=embed_error(f"{ctx.author.name}, go look for a new partner or try later"))
             partnerfound = False
+
+        if ctx.channel.id != 825210956145623080:
+            await ctx.send(embed=embed_error("Sorry, you can't play in this channel. Tic tac toe is only allowed in tool shed"))
         
         if partnerfound:
             map = "      |      |      \n-------------\n      |      |      \n-------------\n      |      |      "
 
             quadrantlist = [
                 "top left",
-                "top",
+                "top middle",
                 "top right",
                 "middle left",
-                "middle",
+                "middle middle",
                 "middle right",
                 "bottom left",
-                "bottom",
+                "bottom middle",
                 "bottom right" 
             ]
 
@@ -249,8 +252,104 @@ class Levels(commands.Cog):
                         else:
                             map = map + i + "\n-------------\n"
                         
-#            def is_winner(map):
+            def is_winner(map):
+                tiles_of_player0 = []
+                tiles_of_player1 = []
+
+                maplist = map.split("\n-------------\n")
+                maplist = list(a.split("|") for a in maplist)
+                count = 0
+                for i in maplist:
+                    if "O" in i:
+                        tiles_of_player0.append(count)
+                    elif "X" in i:
+                        tiles_of_player1.append(count)
+
+                    count += 1
                 
+                tiles_of_player0 = list(quadrantlist[a] for a in tiles_of_player0)
+                tiles_of_player1 = list(quadrantlist[a] for a in tiles_of_player1)
+
+                winner = None
+                modified_quadrantlist = []
+                for i in quadrantlist:
+                    if "top" in i:
+                        modified_quadrantlist.append(i.replace("top", "tmb"))
+                    if "middle" in i:
+                        modified_quadrantlist.append(i.replace("middle", "tmb"))
+                    if "bottom" in i:
+                        modified_quadrantlist.append(i.replace("bottom", "tmb"))
+                    
+                for i in ("tmb", "left", "right"):
+                    trueforall = True
+                    for a in tiles_of_player0:
+                        if i not in a:
+                            trueforall = False 
+
+                    #exceptions
+                    if "top left" in tiles_of_player0 and "middle middle" in tiles_of_player0 and "bottom right" in tiles_of_player0:
+                        trueforall = True
+                    if "top right" in tiles_of_player0 and "middle middle" in tiles_of_player0 and "bottom left" in tiles_of_player0:
+                        trueforall = True
+                    
+                    if trueforall:
+                        winner = 0
+                        break
+
+                for i in ("tmb", "left", "right"):
+                    trueforall = True
+                    for a in tiles_of_player1:
+                        if i not in a:
+                            trueforall = False 
+
+                    #exceptions
+                    if "top left" in tiles_of_player1 and "middle middle" in tiles_of_player1 and "bottom right" in tiles_of_player0:
+                        trueforall = True
+                    if "top right" in tiles_of_player1 and "middle middle" in tiles_of_player1 and "bottom left" in tiles_of_player0:
+                        trueforall = True
+                    
+                    if trueforall:
+                        winner = 1
+                        break
+
+                return winner
+
+            participants = {
+                0: ctx.author,
+                1: member
+            }
+
+            count_of_rounds = 0
+            await ctx.send(embed=discord.Embed(color=get_custom_color(), title="Flipping coins..."))
+            has_turn = random.randint(0, 1)
+            await ctx.send(embed=discord.Embed(color=get_custom_color(), title=f"{participants[has_turn].name} begins", description="Chose one of those directions: top left, top middle, top right, middle left, middle middle, middle right, bottom left, bottom middle, bottom right"))
+
+            while count_of_rounds <= 9:
+                if has_turn == 0:
+                    def check(m):
+                        return m.author == participants[has_turn]
+
+                    msg = await self.bot.wait_for('message', check=check, timeout=30)
+
+                    if str(msg.content) not in quadrantlist:
+                        await ctx.send(embed=embed_error("These are the tiles you can chose, if not already used: top left, top middle, top right, middle left, middle middle, middle right, bottom left, bottom middle, bottom right"))
+                        continue
+                    else:
+                        change_map(map, str(msg.content), has_turn)
+
+                    if is_winner in (0, 1):
+                        await ctx.send(f"Good job, {participants[has_turn]}! You won!")
+                        break
+
+                    has_turn = 1 if has_turn == 0 else 0
+
+                count_of_rounds += 1
+
+                
+                
+
+
+
                 
 
 
