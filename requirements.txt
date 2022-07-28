@@ -1,0 +1,4 @@
+discord==1.7.3
+fuzzywuzzy==0.18.0
+asyncio==3.4.3
+typing==3.7.4.3
