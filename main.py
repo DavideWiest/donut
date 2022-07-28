@@ -12,7 +12,7 @@ from datetime import timedelta
 info_color = discord.Color.dark_purple()
 
 # Important Variables
-TOKEN = "ODI1MDcwMDk3OTEwNzI2NjU3.YF4kaA.U9YxmzAPFJ_MvnywAgJGwDCpFtU"
+TOKEN = ""
 STATUS = "-help | " + "4 the Art Garden" + " by .Daev#7540"
 
 
